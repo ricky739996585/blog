@@ -606,17 +606,17 @@ public class ArticleController {
 
     }
     
-    //获取新闻列表
-    @RequestMapping(value = "/getNewsArticleList", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
+    //获取博客列表
+    @RequestMapping(value = "/getBlogArticleList", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public WebResponse getNewsArticleList(HttpServletRequest request, HttpServletResponse response, HttpSession session,
+    public WebResponse getBlogArticleList(HttpServletRequest request, HttpServletResponse response, HttpSession session,
             @RequestParam(defaultValue = "1", required = false) Integer pageNo,
             @RequestParam(defaultValue = "10", required = false) Integer pageSize,
             @RequestParam(defaultValue = "正常", required = false) String tbStatus,
             @RequestParam(required = false) String keyword,
             @RequestParam(defaultValue = "article_id", required = false) String order,
             @RequestParam(defaultValue = "desc", required = false) String desc ){
-        return this.getArticleTypeList(request, response, session,"新闻",pageNo,pageSize,tbStatus,keyword,order,desc);
+        return this.getArticleTypeList(request, response, session,"博客",pageNo,pageSize,tbStatus,keyword,order,desc);
     }
 
     //获取文章类型列表(HttpServletRequest request, HttpServletResponse response, HttpSession session,typeName,pageNo,pageSize,tbStatus,keyword,order,desc)
@@ -719,7 +719,7 @@ public class ArticleController {
         return webResponse.getWebResponse(statusCode, statusMsg, data);
     }
 
-    //获取新闻列表
+    //获取博客置顶列表
     @RequestMapping(value = "/getTopArticleList", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
     @ResponseBody
     public WebResponse getTopArticleList(HttpServletRequest request, HttpServletResponse response, HttpSession session,
@@ -729,7 +729,7 @@ public class ArticleController {
                                           @RequestParam(required = false) String keyword,
                                           @RequestParam(defaultValue = "article_id", required = false) String order,
                                           @RequestParam(defaultValue = "desc", required = false) String desc ){
-        return this.getTopArticleTypeList(request, response, session,"新闻",pageNo,pageSize,tbStatus,keyword,order,desc);
+        return this.getTopArticleTypeList(request, response, session,"博客",pageNo,pageSize,tbStatus,keyword,order,desc);
     }
 
     //获取置顶文章列表(HttpServletRequest request, HttpServletResponse response, HttpSession session,typeName,pageNo,pageSize,tbStatus,keyword,order,desc)
@@ -988,59 +988,59 @@ public class ArticleController {
         return jsonObject;
     }
   
-    //发表新闻
-    @RequestMapping(value = "/publishNewsArticle", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    //发表博客
+    @RequestMapping(value = "/publishBlogArticle", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public WebResponse publishNewsArticle(HttpServletRequest request, HttpServletResponse response, HttpSession session, String userId, String title, String content,  String tagsId,String articlePhotoUrl) {
-        return this.newArticle(request, response, session, userId, title, content, tagsId,articlePhotoUrl, "新闻");
+    public WebResponse publishBlogArticle(HttpServletRequest request, HttpServletResponse response, HttpSession session, String userId, String title, String content,  String tagsId,String articlePhotoUrl) {
+        return this.newArticle(request, response, session, userId, title, content, tagsId,articlePhotoUrl, "博客");
     }
     
     
 
     //审核文章（管理员审核未审核文章）
-//    @RequestMapping(value = "/examineArticle", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
-//    @ResponseBody
-//    public WebResponse examineArticle(HttpServletRequest request, HttpServletResponse response, HttpSession session, String articleId,String isPass) {
-//        Object data = null;
-//        String statusMsg = "";
-//        Integer statusCode = 200;
-//        Map<String, String> paramMap = new HashMap<String, String>();
-//        paramMap.put("articleId", articleId);
-//        data = paramMap;
-//        if (articleId == null || "".equals(articleId.trim())) {
-//            statusMsg = "未获得主键参数错误！！！";
-//            statusCode = 201;
-//            return webResponse.getWebResponse(statusCode, statusMsg, data);
-//        }
-//        Integer articleIdNumeri = articleId.matches("^[0-9]*$") ? Integer.parseInt(articleId) : 0;
-//        if (articleIdNumeri == 0) {
-//            statusMsg = "主键不为数字错误！！！";
-//            statusCode = 201;
-//            return webResponse.getWebResponse(statusCode, statusMsg, data);
-//        }
-//        //获得原文章
-//        ArticleVo articleVo = this.articleService.getById(articleIdNumeri);
-//        Article article = new Article();
-//        BeanUtils.copyProperties(articleVo, article);  
-//    
-//        if (isPass != null && !("".equals(isPass.trim()))) {
-//            if(isPass.length() > 50) {
-//                statusMsg = " 参数长度过长错误,isPass";
-//                statusCode = 201;
-//                return webResponse.getWebResponse(statusCode, statusMsg, data);
-//            }
-//            article.setIsPass(isPass);
-//        }
-//
-//        int num = this.articleService.update(article);
-//        if (num > 0) {
-//            statusMsg = "审核通过！！！";
-//        } else {
-//            statusCode = 202;
-//            statusMsg = "审核错误";
-//        }
-//        return webResponse.getWebResponse(statusCode, statusMsg, data);
-//    }
+    @RequestMapping(value = "/examineArticle", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    @ResponseBody
+    public WebResponse examineArticle(HttpServletRequest request, HttpServletResponse response, HttpSession session, String articleId,String isPass) {
+        Object data = null;
+        String statusMsg = "";
+        Integer statusCode = 200;
+        Map<String, String> paramMap = new HashMap<String, String>();
+        paramMap.put("articleId", articleId);
+        data = paramMap;
+        if (articleId == null || "".equals(articleId.trim())) {
+            statusMsg = "未获得主键参数错误！！！";
+            statusCode = 201;
+            return webResponse.getWebResponse(statusCode, statusMsg, data);
+        }
+        Integer articleIdNumeri = articleId.matches("^[0-9]*$") ? Integer.parseInt(articleId) : 0;
+        if (articleIdNumeri == 0) {
+            statusMsg = "主键不为数字错误！！！";
+            statusCode = 201;
+            return webResponse.getWebResponse(statusCode, statusMsg, data);
+        }
+        //获得原文章
+        ArticleVo articleVo = this.articleService.getById(articleIdNumeri);
+        Article article = new Article();
+        BeanUtils.copyProperties(articleVo, article);  
+    
+        if (isPass != null && !("".equals(isPass.trim()))) {
+            if(isPass.length() > 50) {
+                statusMsg = " 参数长度过长错误,isPass";
+                statusCode = 201;
+                return webResponse.getWebResponse(statusCode, statusMsg, data);
+            }
+            article.setIsPass(isPass);
+        }
+
+        int num = this.articleService.update(article);
+        if (num > 0) {
+            statusMsg = "审核通过！！！";
+        } else {
+            statusCode = 202;
+            statusMsg = "审核错误";
+        }
+        return webResponse.getWebResponse(statusCode, statusMsg, data);
+    }
 
     //删除文章（不删数据库记录
     @RequestMapping(value = "/deleteArticle", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")

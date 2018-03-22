@@ -1,4 +1,4 @@
-﻿var listURL = "/article/getNewsArticleList";
+﻿var listURL = "/article/getBlogArticleList";
 var editURL = "/article/editArticle";
 $('#tableList').bootstrapTable({
 	url : listURL, // 请求后台的URL（*）
