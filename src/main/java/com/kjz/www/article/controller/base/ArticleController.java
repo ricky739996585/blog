@@ -666,18 +666,18 @@ public class ArticleController {
         int size = list.size();
         JSONArray jsonArray=new JSONArray();
         if (size > 0) {//列表不为空，遍历列表拿到ArticleVo对象中的articleId,userId List
-            for(ArticleVo articlevo:list){
+            for(ArticleVo articleVo:list){
 
                 JSONObject json=new JSONObject();
                 //获得用户昵称
-                String userNickname=this.userUtils.getUserById(articlevo.getUserId()).getNickname();//userId
+                String userNickname=this.userUtils.getUserById(articleVo.getUserId()).getNickname();//userId
                 json.put("userNickname", userNickname);
-                Article article=new Article();
-                BeanUtils.copyProperties(articlevo, article);
-                json.put("article",article);
+//                Article article=new Article();
+//                BeanUtils.copyProperties(articlevo, article);
+                json.put("article",articleVo);
 
                 //获得文章标签名字
-                Integer articleId =articlevo.getArticleId();//articleId
+                Integer articleId =articleVo.getArticleId();//articleId
                 LinkedHashMap<String, String> articleTagscondition = new LinkedHashMap<String, String>();
                 articleTagscondition.put("article_id='"+articleId+"'", "and");
                 //获得文章标签中间表
